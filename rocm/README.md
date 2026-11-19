@@ -2,26 +2,45 @@
 
 This port runs Apple's [FastFrames-S](https://huggingface.co/apple/FastFrames-S) (1.3B) and
 [FastFrames-L](https://huggingface.co/apple/FastFrames-L) (14B) text-to-video models on AMD GPUs
-through ROCm. It is tuned for **Strix Halo** (Ryzen AI MAX+ 395, Radeon 8060S iGPU, gfx1151) with
-a 64 GB VRAM carve-out.
+through ROCm. It is tuned for **Strix Halo** (Ryzen AI MAX+ 395, Radeon 8060S iGPU, gfx1151,
+128 GB unified memory).
 
 ## Results
 
 All numbers are for one 81-frame, 832x480 clip (5.06 s at 16 fps), measured after warm-up with
 `rocm/profile_generate.py` ([JSON](results/)). The setup was PyTorch 2.11 + ROCm 7.13 (AMD
-gfx1151 wheels), on a box where other processes held 7 GB of the 64 GB carve-out.
+gfx1151 wheels), with the GPU otherwise idle and memory configured as a shared pool (see
+[Memory setup](#memory-setup-on-strix-halo)).
 
-| Model | Text encode | Rollout (21 latent frames) | Pixel decode + H.264 | **Total** | vs. real time |
-|---|---|---|---|---|---|
-| FastFrames-S | 0.35 s | 15.7 s | 1.1 s | **17.2 s** | 3.4x |
-| FastFrames-L | 0.52 s | 95.6 s | 1.0 s | **97.2 s** | 19.2x |
+| Model | Text encode | Rollout (21 latent frames) | Pixel decode + H.264 | **Total** | vs. real time | Peak GPU memory |
+|---|---|---|---|---|---|---|
+| FastFrames-S | 0.35 s | 14.1 s | 1.1 s | **15.6 s** | 3.1x | 21 GiB |
+| FastFrames-L | 0.58 s | 87.8 s | 1.2 s | **89.6 s** | 17.7x | 60 GiB |
 
 Time per DiT evaluation grows with the KV cache:
 
 | | Frame 0 | Frame 10 | Frame 20 |
 |---|---|---|---|
-| FF-S | 168 ms | 336 ms | 502 ms |
-| FF-L | 1.34 s | 2.08 s | 2.85 s |
+| FF-S | 153 ms | 298 ms | 443 ms |
+| FF-L | 1.15 s | 1.85 s | 2.55 s |
+
+Earlier runs used the default 64 GB VRAM carve-out with another process holding 7 GB of it. In
+that setup FF-L had to stream 15 of its 40 blocks from host memory and took 97.2 s; FF-S took
+17.2 s ([JSON](results/profile_ff-l_final.json)).
+
+### Memory setup on Strix Halo
+
+By default the BIOS reserves a fixed VRAM carve-out (often 64 GB), and the GPU can only borrow
+half of the remaining RAM on top of it. Shrinking the carve-out and raising the kernel's GTT
+limit turns the 128 GB into one pool shared by the CPU and GPU:
+
+1. In the BIOS (**Advanced → AMD CBS → NBIO Common Options → GFX Configuration** on AMI
+   firmware), set **UMA Frame buffer Size** to its minimum (2 GB on the GMKtec EVO-X2).
+2. Add `ttm.pages_limit=28835840` to the kernel command line. That is 110 GiB in 4 KiB pages;
+   amdgpu and ROCm read it when the driver loads.
+
+After a reboot `torch.cuda.mem_get_info()` reports 110 GiB free, and FF-L runs with its full
+KV cache and no block streaming. `BlockStreamer` still handles smaller carve-outs automatically.
 
 For reference, the paper's numbers on one B200 are 36 ms (FF-S) and 158 ms (FF-L) per latent
 frame.
@@ -91,7 +110,8 @@ FASTFRAMES_CHECKPOINTS=/path/to/checkpoints rocm/run.sh \
    - When the weights plus a full KV cache still do not fit, `BlockStreamer` keeps the last *N*
      transformer blocks in pinned host memory and double-buffers them in on a side stream. On an
      APU the copy runs at about 73 GB/s.
-   - With 7 GB taken by other processes, *N* = 15 of 40 blocks. Streaming is bit-exact (the
+   - With a 64 GB carve-out and 7 GB taken by other processes, *N* = 15 of 40 blocks. With the
+     shared-pool setup above, *N* = 0. Streaming is bit-exact (the
      eager engine with streaming gives bit-identical latents) and costs about 11% of FF-L's
      frame-0 GPU time.
 5. **Tuning and caches in the image.**
@@ -106,8 +126,9 @@ FASTFRAMES_CHECKPOINTS=/path/to/checkpoints rocm/run.sh \
 ### Where the time goes
 
 `rocm/profile_kernels.py` gives a kernel-level view.
-- **FF-L, frame 0:** GEMMs are 72% (hipBLASLt at about 33 TFLOP/s, roughly 55% of the 8060S's
-  BF16 peak), host-to-device streaming 12%, attention 10%, fused elementwise about 5%.
+- **FF-L, frame 0, with 15 blocks streamed:** GEMMs are 72% (hipBLASLt at about 33 TFLOP/s,
+  roughly 55% of the 8060S's BF16 peak), host-to-device streaming 12%, attention 10%, fused
+  elementwise about 5%. Without streaming, frame 0 drops from 1.34 s to 1.15 s.
 - **FF-S at late frames:** attention dominates (about 350 of 500 ms at frame 20).
 
 Both models are throughput-bound on these kernels. The next big wins would need faster GEMM or
