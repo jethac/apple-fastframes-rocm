@@ -1,0 +1,84 @@
+{
+  "shape": [
+    1560,
+    1536,
+    6144
+  ],
+  "tp_size": 0,
+  "exact_data": true,
+  "cmp": {
+    "shape": [
+      1560,
+      6144
+    ],
+    "max_abs_err": 1.0,
+    "mean_abs_err": 2.3266392895299144e-05,
+    "ref_abs_max": 283.0,
+    "rel_l2": 7.610130747108694e-05,
+    "cosine": 0.9999999971056482,
+    "finite": true,
+    "zero_columns_unexpected": 0,
+    "zero_column_ranges": [],
+    "worst_col_block_rel_l2": 0.0007260176641399609,
+    "col_block": 64
+  },
+  "npu": {
+    "compile_s": 7.178994703106582,
+    "host_cpu_ms_per_iter": 3.374440450000016,
+    "wall_ms_min": 8.160490076988935,
+    "wall_ms_median": 8.32195399561897,
+    "wall_ms_all": [
+      8.563095005229115,
+      8.44778900500387,
+      8.718459052033722,
+      8.39188089594245,
+      8.35192296653986,
+      8.33202397916466,
+      8.316664025187492,
+      8.327243966050446,
+      8.314543985761702,
+      8.549674996174872,
+      8.537595975212753,
+      8.376331999897957,
+      8.238447015173733,
+      8.17422999534756,
+      8.160490076988935,
+      8.229207014665008,
+      8.212188025936484,
+      8.222758071497083,
+      8.263136027380824,
+      8.171969908289611
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 23
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 195927
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 2,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 1
+        }
+      ],
+      "nodes_in_vaiml_partitions": 1
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": null,
+    "optimize_level": 2,
+    "npu_executed": true
+  },
+  "exact": false,
+  "tflops": 3.6081183608110305
+}

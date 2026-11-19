@@ -1,0 +1,160 @@
+{
+  "component": "kv_refiner_head",
+  "layer": 0,
+  "tp_size": 1,
+  "graph_vs_upstream_fp32": {
+    "k_ref": {
+      "shape": [
+        1560,
+        1536
+      ],
+      "max_abs_err": 1.049041748046875e-05,
+      "mean_abs_err": 2.574521709752049e-07,
+      "ref_abs_max": 9.623607635498047,
+      "rel_l2": 4.591270768197609e-07,
+      "cosine": 0.9999999999998929,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 5.688786448430496e-07,
+      "col_block": 64
+    },
+    "v_ref": {
+      "shape": [
+        1560,
+        1536
+      ],
+      "max_abs_err": 2.86102294921875e-06,
+      "mean_abs_err": 2.1299721816634505e-07,
+      "ref_abs_max": 11.757047653198242,
+      "rel_l2": 2.0245981702358428e-07,
+      "cosine": 0.9999999999999777,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 2.1790754627329512e-07,
+      "col_block": 64
+    }
+  },
+  "torch_bf16_vs_fp32": {
+    "k_ref": {
+      "shape": [
+        1560,
+        1536
+      ],
+      "max_abs_err": 0.22858953475952148,
+      "mean_abs_err": 0.004755602894850985,
+      "ref_abs_max": 9.623607635498047,
+      "rel_l2": 0.00769438350196653,
+      "cosine": 0.999970400065352,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.00892579459352164,
+      "col_block": 64
+    },
+    "v_ref": {
+      "shape": [
+        1560,
+        1536
+      ],
+      "max_abs_err": 0.07899093627929688,
+      "mean_abs_err": 0.005648004469305397,
+      "ref_abs_max": 11.757047653198242,
+      "rel_l2": 0.005296850876407784,
+      "cosine": 0.9999859720049793,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.0055799125342479135,
+      "col_block": 64
+    }
+  },
+  "onnx_cpu_fp32_ms": {
+    "wall_ms_min": 32.22625993657857,
+    "wall_ms_median": 32.92068396694958
+  },
+  "npu": {
+    "compile_s": 22.291463659028523,
+    "host_cpu_ms_per_iter": 3.313862099999909,
+    "wall_ms_min": 54.00115589145571,
+    "wall_ms_median": 54.20925293583423,
+    "wall_ms_all": [
+      54.93185098748654,
+      54.61976304650307,
+      54.33620396070182,
+      54.09754300490022,
+      54.00115589145571,
+      54.21171791385859,
+      54.096581996418536,
+      54.47104899212718,
+      54.206787957809865,
+      54.194648982957006
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 13
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 710402
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 52,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 32
+        }
+      ],
+      "nodes_in_vaiml_partitions": 32
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": 1,
+    "optimize_level": 1,
+    "npu_executed": true
+  },
+  "npu_vs_upstream_fp32": {
+    "k_ref": {
+      "shape": [
+        1560,
+        1536
+      ],
+      "max_abs_err": 1.031223475933075,
+      "mean_abs_err": 0.018576233232530114,
+      "ref_abs_max": 9.623607635498047,
+      "rel_l2": 0.034014839672470265,
+      "cosine": 0.9994215093255384,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.05695004711824216,
+      "col_block": 64
+    },
+    "v_ref": {
+      "shape": [
+        1560,
+        1536
+      ],
+      "max_abs_err": 0.2271275520324707,
+      "mean_abs_err": 0.020160798466187534,
+      "ref_abs_max": 11.757047653198242,
+      "rel_l2": 0.018343693064227767,
+      "cosine": 0.9998673309537368,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.020203674366505227,
+      "col_block": 64
+    }
+  },
+  "gemm_attn_gflop_per_call": 29.44401408,
+  "npu_effective_tflops": 0.5452478487531552
+}

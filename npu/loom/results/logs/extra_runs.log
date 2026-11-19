@@ -1,0 +1,22 @@
+== ffw_1560x1536x6144_c8r1
+loom-test rc=0 wall=0.556s (includes JIT compile + staging + readback)
+ "cosine": 0.999999999999955,
+ "zero_columns": 0,
+bench_1.json: state=ok correctness=passed n=10 min=200.801ms p50=201.478ms max=203.931ms
+bench_2.json: state=ok correctness=passed n=10 min=200.680ms p50=201.621ms max=201.789ms
+== probe_identity_wide_c8r2
+loom-test rc=0 wall=0.238s (includes JIT compile + staging + readback)
+ "max_abs_err": 0.0,
+ "exact_match": true,
+ "zero_col_blocks_384": [],
+bench_1.json: state=ok correctness=passed n=151 min=0.656ms p50=0.666ms max=0.686ms
+bench_2.json: state=ok correctness=passed n=151 min=0.655ms p50=0.665ms max=0.690ms
+bench_3.json: state=ok correctness=passed n=150 min=0.656ms p50=0.666ms max=0.691ms
+== probe_random_wide_c8r2
+loom-test rc=0 wall=0.255s (includes JIT compile + staging + readback)
+ "max_abs_err": 2.181529998779297e-05,
+ "cosine": 0.9999999999999842,
+ "zero_col_blocks_384": [],
+ "zero_columns": 0,
+[31mFLAGS ERROR: (╯°□°)╯︵👻[0m
+runtime/src/iree/base/tooling/flags.c:521: INVALID_ARGUMENT; flag 'version' not recognized

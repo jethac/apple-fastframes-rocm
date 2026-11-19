@@ -1,0 +1,25 @@
+$ loom-test /home/jethac/fastframes-npu/loom/runs/probe_identity_128x768x768/gemm.loom --device=xdna --file-output-root=/home/jethac/fastframes-npu/loom/runs/probe_identity_128x768x768 --case=@gemm_npy
+loom-test rc=0 wall=0.267s (includes JIT compile + staging + readback)
+{
+ "M": 128,
+ "K": 768,
+ "N": 768,
+ "mode": "identity",
+ "device": "xdna",
+ "gen": "pipe",
+ "gen_args": [
+  "--fused"
+ ],
+ "max_abs_err": 0.0,
+ "mean_abs_err": 0.0,
+ "max_abs_ref": 16.0,
+ "cosine": 1.0000000000000002,
+ "exact_match": true,
+ "untouched_sentinel_count": 0,
+ "loom_test_wall_s": 0.26744668709579855,
+ "zero_col_blocks_8": [],
+ "zero_col_blocks_64": [],
+ "zero_col_blocks_384": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+}

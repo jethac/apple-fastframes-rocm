@@ -1,0 +1,89 @@
+{
+  "shape": [
+    128,
+    768,
+    768
+  ],
+  "tp_size": 0,
+  "exact_data": true,
+  "cmp": {
+    "shape": [
+      128,
+      768
+    ],
+    "max_abs_err": 179.0,
+    "mean_abs_err": 17.77581787109375,
+    "ref_abs_max": 179.0,
+    "rel_l2": 0.7064509739322085,
+    "cosine": 0.7077619807747759,
+    "finite": true,
+    "zero_columns_unexpected": 384,
+    "zero_column_ranges": [
+      [
+        384,
+        767
+      ]
+    ],
+    "worst_col_block_rel_l2": 1.0,
+    "col_block": 64
+  },
+  "npu": {
+    "compile_s": 6.309381893952377,
+    "host_cpu_ms_per_iter": 0.07477475000001732,
+    "wall_ms_min": 0.3614060115069151,
+    "wall_ms_median": 0.3729910240508616,
+    "wall_ms_all": [
+      0.4267140757292509,
+      0.44534297194331884,
+      0.4324530018493533,
+      0.3814960364252329,
+      0.36837602965533733,
+      0.372536014765501,
+      0.3718050429597497,
+      0.37044601049274206,
+      0.3824459854513407,
+      0.3614060115069151,
+      0.36655599251389503,
+      0.3699759254232049,
+      0.3658159403130412,
+      0.3761660773307085,
+      0.36657601594924927,
+      0.3674959298223257,
+      0.37599599454551935,
+      0.37344603333622217,
+      0.40248397272080183,
+      0.37927599623799324
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 23
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 11043
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 2,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 1
+        }
+      ],
+      "nodes_in_vaiml_partitions": 1
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": null,
+    "optimize_level": 1,
+    "npu_executed": true
+  },
+  "exact": false,
+  "tflops": 0.4177986508038782
+}

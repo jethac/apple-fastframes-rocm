@@ -1,0 +1,211 @@
+{
+  "component": "pixel_decoder",
+  "blocks": 3,
+  "head": true,
+  "frames": 3,
+  "tp_size": 1,
+  "inputs": "randn features, 0.2*randn modulation (latency-script convention)",
+  "torch_cpu_clip_ms_per_frame": 212.51035066476712,
+  "torch_frame_graph_vs_upstream_clip": {
+    "shape": [
+      12,
+      3,
+      480,
+      832
+    ],
+    "max_abs_err": 2.9206275939941406e-06,
+    "mean_abs_err": 2.3453907114793028e-07,
+    "ref_abs_max": 1.2576987743377686,
+    "rel_l2": 9.916733088644688e-07,
+    "cosine": 0.9999999999994887,
+    "finite": true,
+    "zero_columns_unexpected": 0,
+    "zero_column_ranges": [],
+    "worst_col_block_rel_l2": 1.0659554246081488e-06,
+    "col_block": 64
+  },
+  "onnx_cpu_fp32_ms": {
+    "wall_ms_min": 184.60761301685125,
+    "wall_ms_median": 189.87945409025997
+  },
+  "onnx_cpu_vs_torch_frame0": {
+    "shape": [
+      1560,
+      3072
+    ],
+    "max_abs_err": 2.8461217880249023e-06,
+    "mean_abs_err": 2.637523164491801e-07,
+    "ref_abs_max": 1.2576984167099,
+    "rel_l2": 1.0741182865470281e-06,
+    "cosine": 0.9999999999994176,
+    "finite": true,
+    "zero_columns_unexpected": 0,
+    "zero_column_ranges": [],
+    "worst_col_block_rel_l2": 1.2601403045071026e-06,
+    "col_block": 64
+  },
+  "npu": {
+    "compile_s": 43.98854216199834,
+    "wall_ms_min": 573.1766670942307,
+    "wall_ms_median": 577.3473095032386,
+    "wall_ms_all": [
+      576.7975699855015,
+      578.4222390502691,
+      578.1394100049511,
+      577.1513970103115,
+      577.8797889361158,
+      577.3021710338071,
+      577.3924479726702,
+      577.6383589254692,
+      573.1766670942307,
+      574.8054960276932
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 13
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 7490889
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 99,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 61
+        }
+      ],
+      "nodes_in_vaiml_partitions": 61
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": 1,
+    "optimize_level": 1,
+    "npu_executed": true
+  },
+  "npu_vs_torch_tokens": [
+    {
+      "shape": [
+        1560,
+        3072
+      ],
+      "max_abs_err": 0.08215367048978806,
+      "mean_abs_err": 0.0070914957999214994,
+      "ref_abs_max": 1.2576984167099,
+      "rel_l2": 0.02896879100913774,
+      "cosine": 0.9995910338571885,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.03454660290336178,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        1560,
+        3072
+      ],
+      "max_abs_err": 0.06624700129032135,
+      "mean_abs_err": 0.00617611254335129,
+      "ref_abs_max": 1.196579098701477,
+      "rel_l2": 0.027063785715714994,
+      "cosine": 0.999644791667744,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.03296417124546827,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        1560,
+        3072
+      ],
+      "max_abs_err": 0.06989923119544983,
+      "mean_abs_err": 0.006040410306327994,
+      "ref_abs_max": 1.1484192609786987,
+      "rel_l2": 0.025585577307168362,
+      "cosine": 0.9996818015931134,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.031216461610125746,
+      "col_block": 64
+    }
+  ],
+  "npu_vs_torch_pixels": [
+    {
+      "shape": [
+        4,
+        3,
+        480,
+        832
+      ],
+      "max_abs_err": 0.08215367048978806,
+      "mean_abs_err": 0.0070914957999214994,
+      "ref_abs_max": 1.2576984167099,
+      "rel_l2": 0.028968791009137747,
+      "cosine": 0.9995910338571892,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.03118850565224177,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        4,
+        3,
+        480,
+        832
+      ],
+      "max_abs_err": 0.06624700129032135,
+      "mean_abs_err": 0.00617611254335129,
+      "ref_abs_max": 1.196579098701477,
+      "rel_l2": 0.02706378571571499,
+      "cosine": 0.9996447916677443,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.029064587843964925,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        4,
+        3,
+        480,
+        832
+      ],
+      "max_abs_err": 0.06989923119544983,
+      "mean_abs_err": 0.006040410306327994,
+      "ref_abs_max": 1.1484192609786987,
+      "rel_l2": 0.025585577307168372,
+      "cosine": 0.9996818015931135,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.027755495576046292,
+      "col_block": 64
+    }
+  ],
+  "npu_pixel_uint8_max_abs_diff": [
+    11.0,
+    9.0,
+    9.0
+  ],
+  "npu_pixel_uint8_mean_abs_diff": [
+    0.9089660048484802,
+    0.7924846410751343,
+    0.7748560309410095
+  ],
+  "gemm_gflop_per_call": 198.74709504,
+  "npu_effective_tflops": 0.34674666023578005
+}

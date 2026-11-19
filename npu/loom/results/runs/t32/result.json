@@ -1,0 +1,19 @@
+{
+ "M": 32,
+ "K": 256,
+ "N": 32,
+ "mode": "random",
+ "device": "xdna",
+ "kc": 32,
+ "grid": 1,
+ "max_abs_err": 3.5315752029418945e-06,
+ "mean_abs_err": 3.2933553484326694e-07,
+ "max_abs_ref": 19.725686743855476,
+ "cosine": 0.999999999999996,
+ "exact_match": false,
+ "untouched_sentinel_count": 0,
+ "loom_test_wall_s": 0.2898260710062459,
+ "zero_col_blocks_8": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+}

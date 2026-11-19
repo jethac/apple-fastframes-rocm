@@ -1,0 +1,15 @@
+optimize_level": 2
+NPU_ALONE
+{"model": "pixdec_frame.onnx", "n": 154, "ms_min": 125.63394894823432, "ms_median": 129.41157101886347}
+GPU_ALONE
+{"gpu": "dit_block_f20", "n": 388, "ms_min": 51.13025801256299, "ms_median": 51.61500000394881}
+BOTH
+{"model": "pixdec_frame.onnx", "n": 76, "ms_min": 180.21950696129352, "ms_median": 197.0556424348615}
+{"gpu": "dit_block_f20", "n": 560, "ms_min": 51.20810505468398, "ms_median": 52.35625704517588}
+NPU_ALONE
+{"model": "pixdec_frame.onnx", "n": 155, "ms_min": 124.82625106349587, "ms_median": 129.08793904352933}
+BOTH
+{"model": "pixdec_frame.onnx", "n": 76, "ms_min": 183.36958694271743, "ms_median": 199.0063184639439}
+{"gpu": "dit_block_f20", "n": 656, "ms_min": 51.22550390660763, "ms_median": 52.05941805616021}
+NPU_ALONE_AGAIN
+{"model": "pixdec_frame.onnx", "n": 117, "ms_min": 120.11017894838005, "ms_median": 128.5204099258408}

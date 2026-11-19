@@ -1,0 +1,19 @@
+
+--------------------------------
+[0000:c6:00.1] : NPU Strix Halo
+--------------------------------
+AIE Partitions
+  Total NPU Memory Usage: 123 MB
+  Partition Index   : 0
+    Columns: [0, 1, 2, 3, 4, 5, 6, 7]
+    HW Contexts:
+      |PID               |Ctx ID    |Submissions  |Migrations   |Frame Evts  |Err  |Priority  |
+      |Process Name      |Status    |Completions  |Suspensions  |Layer Evts  |     |GOPS      |
+      |NPU Memory Usage  |Instr BO  |             |             |            |     |FPS       |
+      |                  |          |             |             |            |     |Latency   |
+      |------------------|----------|-------------|-------------|------------|-----|----------|
+      |1406604           |1         |10           |0            |0           |0    |Normal    |
+      |N/A               |Active    |9            |0            |0           |     |N/A       |
+      |123 MB            |8208 KB   |             |             |            |     |N/A       |
+      |                  |          |             |             |            |     |N/A       |
+      |------------------|----------|-------------|-------------|------------|-----|----------|

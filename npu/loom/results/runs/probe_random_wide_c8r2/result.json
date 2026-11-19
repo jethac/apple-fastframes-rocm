@@ -1,0 +1,28 @@
+{
+ "M": 128,
+ "K": 768,
+ "N": 768,
+ "mode": "random",
+ "device": "xdna://0?columns=8",
+ "gen": "pipe",
+ "gen_args": [
+  "--fused",
+  "--wide",
+  "--cols",
+  "8",
+  "--rows",
+  "2"
+ ],
+ "max_abs_err": 2.181529998779297e-05,
+ "mean_abs_err": 1.0898145694539692e-06,
+ "max_abs_ref": 41.95778641104698,
+ "cosine": 0.9999999999999842,
+ "exact_match": false,
+ "untouched_sentinel_count": 0,
+ "loom_test_wall_s": 0.25538381293881685,
+ "zero_col_blocks_8": [],
+ "zero_col_blocks_64": [],
+ "zero_col_blocks_384": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+}

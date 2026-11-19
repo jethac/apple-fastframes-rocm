@@ -1,0 +1,19 @@
+libamdf on Linux
+  ABI         20
+  GPU API     6
+  XDNA API    3
+
+Memory pools
+  system:0    62.4 GiB system RAM
+              67027718144 bytes; 5 profiles; system_backed, available_bytes
+
+xdna://0  AMD XDNA 1022:17f0:11 (0000:c6:00.1)
+  Selector    xdna://id/0000010500000000ea94362d296f5eca
+  Native      Linux character device 261:0
+  PCI IDs     1022:17f0, revision 11; subsystem 1022:17f0
+  Target      amd.xdna.strix_halo.17f0_11 (AIE2P)
+  PCI         0000:c6:00.1
+  Locality    unavailable
+  Queue 0     XDNA; kernel publication
+      Format          version 1, native features 0x0
+      Roles           compute

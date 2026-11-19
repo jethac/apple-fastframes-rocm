@@ -1,0 +1,42 @@
+=== ffw_1560x1536x6144_c8r2
+loom-test rc=0 wall=0.497s (includes JIT compile + staging + readback)
+ "max_abs_err": 6.80387020111084e-05,
+ "max_abs_ref": 69.58508097939193,
+ "cosine": 0.999999999999955,
+ "untouched_sentinel_count": 0,
+ "zero_col_blocks_8": [],
+ "zero_col_blocks_64": [],
+ "zero_col_blocks_384": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+bench_1.json: state=ok correctness=passed n=10 min=100.626ms p50=100.994ms max=101.768ms
+bench_2.json: state=ok correctness=passed n=10 min=100.377ms p50=100.494ms max=101.056ms
+bench_3.json: state=ok correctness=passed n=10 min=100.951ms p50=101.094ms max=102.695ms
+=== ffw_1560x6144x1536_c8r2
+loom-test rc=0 wall=0.363s (includes JIT compile + staging + readback)
+ "max_abs_err": 0.0003225170075893402,
+ "max_abs_ref": 133.99502641241997,
+ "cosine": 0.9999999999997645,
+ "untouched_sentinel_count": 0,
+ "zero_col_blocks_8": [],
+ "zero_col_blocks_64": [],
+ "zero_col_blocks_384": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+bench_1.json: state=ok correctness=passed n=10 min=103.029ms p50=103.478ms max=104.094ms
+bench_2.json: state=ok correctness=passed n=10 min=103.015ms p50=103.183ms max=103.434ms
+bench_3.json: state=ok correctness=passed n=10 min=103.005ms p50=103.311ms max=103.511ms
+=== ffw_1560x1536x768_c8r2
+loom-test rc=0 wall=0.261s (includes JIT compile + staging + readback)
+ "max_abs_err": 5.322694778442383e-05,
+ "max_abs_ref": 63.672171799466014,
+ "cosine": 0.999999999999963,
+ "untouched_sentinel_count": 0,
+ "zero_col_blocks_8": [],
+ "zero_col_blocks_64": [],
+ "zero_col_blocks_384": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+bench_1.json: state=ok correctness=passed n=10 min=13.288ms p50=13.586ms max=13.781ms
+bench_2.json: state=ok correctness=passed n=10 min=13.146ms p50=13.178ms max=13.215ms
+bench_3.json: state=ok correctness=passed n=10 min=13.443ms p50=13.497ms max=13.853ms

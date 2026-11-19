@@ -1,0 +1,12 @@
+libamdf on Linux
+
+Memory pools
+  system:0    62.4 GiB system RAM
+
+xdna://0  AMD XDNA 1022:17f0:11 (0000:c6:00.1)
+  Target      amd.xdna.strix_halo.17f0_11 (AIE2P)
+  PCI         0000:c6:00.1
+  Queue 0     XDNA; kernel publication
+  Live array  8 columns from 0, 6 rows
+
+Activation: OK

@@ -1,0 +1,51 @@
+--------- Final Summary of VAIML Pass ----------
+OS: Linux X64
+Model: /home/jethac/fastframes-npu/rai/art/kvref/kvref_stem.onnx
+Model signature: 1a925cc57f5db6b6309eb33c820a9d9c
+
+Compiler Information
+  Target Device: stx
+  Device Data Type: bfloat16
+  Flow: default
+  Version: VAIP 501c5d295
+  FlexML Version: rai_1_9 (hash: nogit, built: N/A)
+  Overlay: rai_2x4x4.json
+  NPU Frequency: 1267 MHz
+  AIE Single Core Compiler: peano
+  Recipes: mlopslib
+  DP size: 1
+  TP size: 1
+  Optimize Level: 2
+  Preferred Data Storage: auto
+  Threshold GOPs Percent: 2
+  Logging Level: error
+  ai_analyzer_profiling: false
+  ai_analyzer_enhanced_profiling: false
+  Preemption: enabled
+  Model data type: float32
+Number of operators in the model: 146
+GOPs of the model: 131.094
+Number of operators supported by VAIML: 146 (100.000%)
+GOPs supported by VAIML: 131.094 (100.000%)
+Number of subgraphs supported by VAIML: 1
+Number of operators offloaded by VAIML: 146 (100.000%)
+GOPs offloaded by VAIML: 131.094 (100.000%)
+Number of subgraphs offloaded by VAIML: 1
+Number of partitions offloaded to NPU: 1
+Number of partitions executed on CPU: 0
+Number of subgraphs with compilation errors (fall back to CPU): 0
+Number of subgraphs below 2% GOPs threshold (fall back to CPU): 0
+Number of subgraphs above max number of subgraphs allowed(7): 0 (fall back to CPU)
+Stats for offloaded subgraphs
+Subgraph vaiml_par_0 stats: 
+    Type: npu
+    Operators: 146 (100.000%)
+    GOPs : 131.094 (100.000%)  OPs: 131,094,010,906
+    bf16 ops %: 93.067
+
+Compilation Information
+  Frontend (FE): 20.9 s (18.3%)
+  Backend (BE): 92.8 s (81.2%)
+    AIE Compile: 15.1 s (13.2%)
+  Overhead (partitioner, cache, etc.): 0.5 s (0.5%)
+  Total: 114.2 s

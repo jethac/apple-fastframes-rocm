@@ -1,0 +1,83 @@
+{
+  "shape": [
+    1560,
+    1536,
+    6144
+  ],
+  "tp_size": 1,
+  "exact_data": true,
+  "cmp": {
+    "shape": [
+      1560,
+      6144
+    ],
+    "max_abs_err": 1.0,
+    "mean_abs_err": 2.3266392895299144e-05,
+    "ref_abs_max": 283.0,
+    "rel_l2": 7.610130747108694e-05,
+    "cosine": 0.9999999971056482,
+    "finite": true,
+    "zero_columns_unexpected": 0,
+    "zero_column_ranges": [],
+    "worst_col_block_rel_l2": 0.0007260176641399609,
+    "col_block": 64
+  },
+  "npu": {
+    "compile_s": 7.215061614057049,
+    "wall_ms_min": 30.35070199985057,
+    "wall_ms_median": 30.572683026548475,
+    "wall_ms_all": [
+      30.723786912858486,
+      30.35070199985057,
+      30.468137003481388,
+      30.692638945765793,
+      30.684408033266664,
+      30.578423058614135,
+      30.60224198270589,
+      30.53688397631049,
+      30.525685055181384,
+      30.538773979060352,
+      30.504636000841856,
+      30.566942994482815,
+      30.529474024660885,
+      30.68289894144982,
+      30.647199950180948,
+      30.60101205483079,
+      30.66103905439377,
+      30.687229009345174,
+      30.555233010090888,
+      30.526845017448068
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 23
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 707181
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 2,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 1
+        }
+      ],
+      "nodes_in_vaiml_partitions": 1
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": 1,
+    "optimize_level": 1,
+    "npu_executed": true
+  },
+  "exact": false,
+  "tflops": 0.9701262949418754
+}

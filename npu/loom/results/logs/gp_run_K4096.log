@@ -1,0 +1,6 @@
+loom-test /home/jethac/fastframes-npu/loom/gp/run4096/gp_check.loom --device=xdna --config=ffn_gate_up.input_size=4096 --file-output-root=/home/jethac/fastframes-npu/loom/gp/run4096
+
+{"format":"loom.test.v0","case_count":1,"scenario_count":0,"sample_count":1,"failed_sample_count":0,"trial_count":0,"failed_trial_count":0,"skipped_case_count":0,"skipped_scenario_count":0,"planning_issue_count":0,"xfail_count":0,"xpass_count":0,"xfail_mismatch_count":0,"samples":[{"case":"gp_npy","sample_ordinal":0,"passed":true,"expectations":{"expectation_count":0,"passed_count":0,"failure_count":0,"failures":[]}}],"trials":[],"skipped_cases":[],"skipped_scenarios":[],"planning_issues":[],"xfails":[]}
+
+reference gate=-1.359375 up=1.484375 result=-0.32421875
+npu result=-0.32421875  exact_match=True

@@ -1,0 +1,112 @@
+{
+  "component": "kv_refiner_stem",
+  "layer": null,
+  "tp_size": 0,
+  "graph_vs_upstream_fp32": {
+    "phi": {
+      "shape": [
+        1560,
+        768
+      ],
+      "max_abs_err": 6.437301635742188e-05,
+      "mean_abs_err": 2.0432776943431197e-06,
+      "ref_abs_max": 13.395898818969727,
+      "rel_l2": 2.972328241853887e-06,
+      "cosine": 0.9999999999955822,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 3.4955181871661424e-06,
+      "col_block": 64
+    }
+  },
+  "torch_bf16_vs_fp32": {
+    "phi": {
+      "shape": [
+        1560,
+        768
+      ],
+      "max_abs_err": 1.2200053930282593,
+      "mean_abs_err": 0.029787412525009653,
+      "ref_abs_max": 13.395898818969727,
+      "rel_l2": 0.04543763037340084,
+      "cosine": 0.9989679566371956,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.05301384806305504,
+      "col_block": 64
+    }
+  },
+  "onnx_cpu_fp32_ms": {
+    "wall_ms_min": 137.53929699305445,
+    "wall_ms_median": 178.22922195773572
+  },
+  "npu": {
+    "compile_s": 120.0653981200885,
+    "host_cpu_ms_per_iter": 1.3037738000008403,
+    "wall_ms_min": 112.50589799601585,
+    "wall_ms_median": 112.99097002483904,
+    "wall_ms_all": [
+      113.71437204070389,
+      112.50589799601585,
+      113.63079492002726,
+      113.07890608441085,
+      113.01672901026905,
+      112.85336397122592,
+      112.96521103940904,
+      112.66189196612686,
+      113.6089259525761,
+      112.95367102138698
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 13
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 1475966
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 213,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 146
+        }
+      ],
+      "nodes_in_vaiml_partitions": 146
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": null,
+    "optimize_level": 2,
+    "npu_executed": true
+  },
+  "npu_vs_upstream_fp32": {
+    "phi": {
+      "shape": [
+        1560,
+        768
+      ],
+      "max_abs_err": 2.0819389820098877,
+      "mean_abs_err": 0.07642073340672974,
+      "ref_abs_max": 13.395898818969727,
+      "rel_l2": 0.10687030867961396,
+      "cosine": 0.994282199334798,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 0.12475794700969049,
+      "col_block": 64
+    }
+  },
+  "gemm_attn_gflop_per_call": 121.9166208,
+  "npu_effective_tflops": 1.0836464840653723
+}

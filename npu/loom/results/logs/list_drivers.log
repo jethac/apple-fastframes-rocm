@@ -1,0 +1,11 @@
+# ============================================================================
+# Available HAL drivers
+# ============================================================================
+# Use --list_devices={driver name} to enumerate available devices.
+
+            xdna: AMD XDNA execution using libamdf
+            rdna: AMD RDNA execution using libamdf
+            cdna: AMD CDNA execution using libamdf
+          amdgpu: AMD GPU execution using libamdf
+            task: CPU execution using the IREE multithreading task system
+          vulkan: Vulkan execution using the system loader

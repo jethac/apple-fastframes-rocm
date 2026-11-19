@@ -1,0 +1,7 @@
+
+--------------------------------
+[0000:c6:00.1] : NPU Strix Halo
+--------------------------------
+AIE Partitions
+  No hardware contexts running on device
+

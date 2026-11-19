@@ -1,0 +1,8 @@
+ 2.13.0+git733fca1
+pixel_decoder_frame_ms: 16.89
+kvref_stem_ms: 11.37
+kvref_head_one_layer_ms: 1.46
+kvref_heads_all30_upstream_batched_ms: 45.64
+dit_block_frame0_ms_eager_math_attention: 8.67
+dit_block_frame4_ms_eager_math_attention: 16.40
+dit_block_frame20_ms_eager_math_attention: 52.09

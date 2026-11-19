@@ -1,0 +1,226 @@
+{
+  "component": "pixel_decoder",
+  "blocks": 3,
+  "head": true,
+  "frames": 3,
+  "tp_size": 0,
+  "inputs": "randn features, 0.2*randn modulation (latency-script convention)",
+  "torch_cpu_clip_ms_per_frame": 214.9586076460158,
+  "torch_frame_graph_vs_upstream_clip": {
+    "shape": [
+      12,
+      3,
+      480,
+      832
+    ],
+    "max_abs_err": 2.9206275939941406e-06,
+    "mean_abs_err": 2.3453907114793028e-07,
+    "ref_abs_max": 1.2576987743377686,
+    "rel_l2": 9.916733088644688e-07,
+    "cosine": 0.9999999999994887,
+    "finite": true,
+    "zero_columns_unexpected": 0,
+    "zero_column_ranges": [],
+    "worst_col_block_rel_l2": 1.0659554246081488e-06,
+    "col_block": 64
+  },
+  "onnx_cpu_fp32_ms": {
+    "wall_ms_min": 184.00582601316273,
+    "wall_ms_median": 228.67626510560513
+  },
+  "onnx_cpu_vs_torch_frame0": {
+    "shape": [
+      1560,
+      3072
+    ],
+    "max_abs_err": 2.8461217880249023e-06,
+    "mean_abs_err": 2.637523164491801e-07,
+    "ref_abs_max": 1.2576984167099,
+    "rel_l2": 1.0741182865470281e-06,
+    "cosine": 0.9999999999994176,
+    "finite": true,
+    "zero_columns_unexpected": 0,
+    "zero_column_ranges": [],
+    "worst_col_block_rel_l2": 1.2601403045071026e-06,
+    "col_block": 64
+  },
+  "npu": {
+    "compile_s": 47.401918999967165,
+    "wall_ms_min": 361.32299492601305,
+    "wall_ms_median": 463.49910291610286,
+    "wall_ms_all": [
+      361.32299492601305,
+      463.52948690764606,
+      463.13268097583205,
+      462.658470030874,
+      463.59039400704205,
+      462.82541402615607,
+      465.812940034084,
+      474.5763590326533,
+      463.6450830148533,
+      463.46871892455965
+    ],
+    "profile": {
+      "kernel_events": {
+        "VitisAIExecutionProvider": 13
+      },
+      "kernel_us_total": {
+        "VitisAIExecutionProvider": 5826456
+      }
+    },
+    "placement": {
+      "total_onnx_nodes": 99,
+      "vaiml_partitions": [
+        {
+          "id": "vaiml_par_0",
+          "device": "VAIML",
+          "nodes": 61
+        }
+      ],
+      "nodes_in_vaiml_partitions": 61
+    },
+    "loaded_libs": [
+      "/home/jethac/fastframes-npu/rai/runtime/opt/amd/ryzenai/1.9.0/deployment/lib/libflexmlrt.so",
+      "/home/jethac/fastframes-npu/rai/venv/lib/python3.12/site-packages/onnxruntime/capi/libonnxruntime_vitisai_ep.so",
+      "/opt/xilinx/xrt/lib/libxrt_core.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_coreutil.so.2.27.0",
+      "/opt/xilinx/xrt/lib/libxrt_driver_xdna.so.2.27.0"
+    ],
+    "tp_size": 0,
+    "optimize_level": 1,
+    "npu_executed": true
+  },
+  "npu_vs_torch_tokens": [
+    {
+      "shape": [
+        1560,
+        3072
+      ],
+      "max_abs_err": 4.658464848995209,
+      "mean_abs_err": 0.46908820453558825,
+      "ref_abs_max": 1.2576984167099,
+      "rel_l2": 2.0658857919244173,
+      "cosine": 0.02412790133887522,
+      "finite": true,
+      "zero_columns_unexpected": 1536,
+      "zero_column_ranges": [
+        [
+          1536,
+          3071
+        ]
+      ],
+      "worst_col_block_rel_l2": 3.0553717306116583,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        1560,
+        3072
+      ],
+      "max_abs_err": 4.467353971675038,
+      "mean_abs_err": 0.4554216074120817,
+      "ref_abs_max": 1.196579098701477,
+      "rel_l2": 2.182868680606932,
+      "cosine": 0.026361977274866843,
+      "finite": true,
+      "zero_columns_unexpected": 1536,
+      "zero_column_ranges": [
+        [
+          1536,
+          3071
+        ]
+      ],
+      "worst_col_block_rel_l2": 3.312104306449221,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        1560,
+        3072
+      ],
+      "max_abs_err": 5.008506774902344,
+      "mean_abs_err": 0.4596228937225784,
+      "ref_abs_max": 1.1484192609786987,
+      "rel_l2": 2.1174208073015057,
+      "cosine": 0.030445185530983188,
+      "finite": true,
+      "zero_columns_unexpected": 1536,
+      "zero_column_ranges": [
+        [
+          1536,
+          3071
+        ]
+      ],
+      "worst_col_block_rel_l2": 3.18386419002986,
+      "col_block": 64
+    }
+  ],
+  "npu_vs_torch_pixels": [
+    {
+      "shape": [
+        4,
+        3,
+        480,
+        832
+      ],
+      "max_abs_err": 4.658464848995209,
+      "mean_abs_err": 0.46908820453558825,
+      "ref_abs_max": 1.2576984167099,
+      "rel_l2": 2.0658857919244165,
+      "cosine": 0.024127901338875237,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 2.2297232347816287,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        4,
+        3,
+        480,
+        832
+      ],
+      "max_abs_err": 4.467353971675038,
+      "mean_abs_err": 0.4554216074120817,
+      "ref_abs_max": 1.196579098701477,
+      "rel_l2": 2.1828686806069304,
+      "cosine": 0.026361977274866843,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 2.345836312391965,
+      "col_block": 64
+    },
+    {
+      "shape": [
+        4,
+        3,
+        480,
+        832
+      ],
+      "max_abs_err": 5.008506774902344,
+      "mean_abs_err": 0.4596228937225784,
+      "ref_abs_max": 1.1484192609786987,
+      "rel_l2": 2.117420807301505,
+      "cosine": 0.0304451855309832,
+      "finite": true,
+      "zero_columns_unexpected": 0,
+      "zero_column_ranges": [],
+      "worst_col_block_rel_l2": 2.3166154443393956,
+      "col_block": 64
+    }
+  ],
+  "npu_pixel_uint8_max_abs_diff": [
+    255.0,
+    255.0,
+    254.0
+  ],
+  "npu_pixel_uint8_mean_abs_diff": [
+    54.42013168334961,
+    52.81464767456055,
+    53.38483428955078
+  ],
+  "gemm_gflop_per_call": 198.74709504,
+  "npu_effective_tflops": 0.5500538239496681
+}

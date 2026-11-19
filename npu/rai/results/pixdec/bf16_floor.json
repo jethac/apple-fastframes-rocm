@@ -1,0 +1,20 @@
+{
+ "bf16_vs_fp32_tokens": {
+  "shape": [
+   1560,
+   3072
+  ],
+  "max_abs_err": 0.027046501636505127,
+  "mean_abs_err": 0.0025527885307532897,
+  "ref_abs_max": 1.2576984167099,
+  "rel_l2": 0.010407165880387174,
+  "cosine": 0.9999458629844775,
+  "finite": true,
+  "zero_columns_unexpected": 0,
+  "zero_column_ranges": [],
+  "worst_col_block_rel_l2": 0.011907299250158957,
+  "col_block": 64
+ },
+ "bf16_uint8_mean_abs": 0.32348236441612244,
+ "bf16_uint8_max_abs": 4.0
+}

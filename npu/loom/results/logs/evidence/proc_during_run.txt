@@ -1,0 +1,15 @@
+### sample 1 05:47:01.868320156 loom-benchmark pid=1406604
+loom-benchmark gemm.loom --benchmark=@gemm_bench --device=xdna://0?columns=8 --measure=dispatch_complete --output=evidence_bench_1.json 
+lrwx------ 1 jethac jethac 64 Nov 19 05:47 4 -> /dev/accel/accel0
+### sample 2 05:47:02.416122685 loom-benchmark pid=1406667
+loom-benchmark gemm.loom --benchmark=@gemm_bench --device=xdna://0?columns=8 --measure=dispatch_complete --output=evidence_bench_2.json 
+lrwx------ 1 jethac jethac 64 Nov 19 05:47 4 -> /dev/accel/accel0
+### sample 3 05:47:02.962529018 loom-benchmark pid=1406667
+loom-benchmark gemm.loom --benchmark=@gemm_bench --device=xdna://0?columns=8 --measure=dispatch_complete --output=evidence_bench_2.json 
+lrwx------ 1 jethac jethac 64 Nov 19 05:47 4 -> /dev/accel/accel0
+### sample 4 05:47:03.513571214 loom-benchmark pid=1406667
+loom-benchmark gemm.loom --benchmark=@gemm_bench --device=xdna://0?columns=8 --measure=dispatch_complete --output=evidence_bench_2.json 
+lrwx------ 1 jethac jethac 64 Nov 19 05:47 4 -> /dev/accel/accel0
+### sample 5 05:47:04.066760248 loom-benchmark pid=1406759
+loom-benchmark gemm.loom --benchmark=@gemm_bench --device=xdna://0?columns=8 --measure=dispatch_complete --output=evidence_bench_3.json 
+lrwx------ 1 jethac jethac 64 Nov 19 05:47 4 -> /dev/accel/accel0

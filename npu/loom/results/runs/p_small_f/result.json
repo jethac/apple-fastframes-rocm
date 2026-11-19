@@ -1,0 +1,22 @@
+{
+ "M": 32,
+ "K": 128,
+ "N": 64,
+ "mode": "random",
+ "device": "xdna",
+ "gen": "pipe",
+ "gen_args": [
+  "--fused"
+ ],
+ "max_abs_err": 1.6614794731140137e-06,
+ "mean_abs_err": 1.613607594208588e-07,
+ "max_abs_ref": 13.780679404735565,
+ "cosine": 0.999999999999998,
+ "exact_match": false,
+ "untouched_sentinel_count": 0,
+ "loom_test_wall_s": 0.2479288779431954,
+ "zero_col_blocks_8": [],
+ "zero_col_blocks_64": [],
+ "zero_columns": 0,
+ "zero_rows": 0
+}
