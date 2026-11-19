@@ -105,6 +105,13 @@ class FastOps:
             sa = block.self_attn
             weight = torch.cat([sa.q.weight, sa.k.weight, sa.v.weight], dim=0).detach().contiguous()
             bias = torch.cat([sa.q.bias, sa.k.bias, sa.v.bias], dim=0).detach().contiguous()
+            # ROCm port: re-point Q/K/V at slices of the fused copy instead of keeping both
+            # (identical values; saves 6.3 GB on the 14B model, which decides whether FF-L fits
+            # in a 64 GB Strix Halo carve-out).
+            if not torch.is_grad_enabled() or not sa.q.weight.requires_grad:
+                for i, lin in enumerate((sa.q, sa.k, sa.v)):
+                    lin.weight.data = weight[i * model.dim:(i + 1) * model.dim]
+                    lin.bias.data = bias[i * model.dim:(i + 1) * model.dim]
             self.qkv.append((weight, bias))
         h, w = height // model.patch_size[1], width // model.patch_size[2]
         half = model.dim // model.num_heads // 2

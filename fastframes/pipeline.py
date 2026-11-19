@@ -14,6 +14,7 @@ KV cache of all previous frames. After the frame's final step:
 from __future__ import annotations
 
 import contextlib
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional, Sequence
@@ -124,12 +125,28 @@ class FastFrames:
         self.fast = FastOps(dit, height, width, config.num_frames) if config.fast_ops else None
         self._time = {}
         self._refine_embedding = None
+        self.engine = None  # ROCm port: optional ``fastframes.engine.FastEngine`` (``enable_engine``)
+
+    def enable_engine(self, compile="max-autotune-no-cudagraphs", offload="auto"):
+        """Use the compiled per-frame engine for the DiT and the refiner stem (ROCm port).
+
+        ``offload``: transformer blocks streamed from pinned host memory (``"auto"``: as many as
+        needed for the weights and a full KV cache to fit in free device memory).
+        """
+        from .engine import FastEngine
+        self.engine = FastEngine(self, compile=compile, offload=offload)
+        return self
 
     @classmethod
-    def from_pretrained(cls, config, wan_dir, dit, refiner, decoder, *, device="cuda"):
-        """Build from checkpoint paths (or already-loaded state dicts)."""
+    def from_pretrained(cls, config, wan_dir, dit, refiner, decoder, *, device="cuda", text_encoder_device=None):
+        """Build from checkpoint paths (or already-loaded state dicts).
+
+        ROCm port: safetensors are read straight into device memory (a 14B DiT would
+        otherwise be staged in host RAM first), and ``text_encoder_device`` (default:
+        ``device``) can keep the 11 GB umT5-XXL on the CPU to leave GPU memory for FF-L.
+        """
         def state(value, key=None):
-            return value if isinstance(value, dict) else load_state_dict(value, key)
+            return value if isinstance(value, dict) else load_state_dict(value, key, device=device)
 
         dit = build_wan(config.wan_model, state(dit, "generator_ema"), device=device)
         wan = WAN_CONFIGS[config.wan_model]
@@ -145,7 +162,7 @@ class FastFrames:
             decoder_net = PixelDecoder(wan.dim)
             decoder_state = {k.removeprefix("pixel_head."): v for k, v in decoder_state.items()}
         decoder_net.load_state_dict(decoder_state, strict=True)
-        text_encoder = TextEncoder(Path(wan_dir)).to(device, dtype=torch.bfloat16)
+        text_encoder = TextEncoder(Path(wan_dir)).to(text_encoder_device or device, dtype=torch.bfloat16)
         return cls(config, dit, refiner_net.to(device).eval().requires_grad_(False),
                    decoder_net.to(device, dtype=config.decoder_dtype).eval().requires_grad_(False),
                    text_encoder)
@@ -158,8 +175,39 @@ class FastFrames:
     # ------------------------------------------------------------------ text / noise
     @torch.inference_mode()
     def encode_prompt(self, prompt: str):
+        if self.text_encoder.device.type == "cpu":
+            if self._transient_text_encoder():
+                return self._encode_on_device(prompt)
+            with torch.autocast("cpu", dtype=torch.bfloat16, enabled=self.config.autocast):
+                return self.text_encoder([prompt])["prompt_embeds"].to(self.device)
         with self.autocast():
             return self.text_encoder([prompt])["prompt_embeds"]
+
+    def _transient_text_encoder(self):
+        """ROCm port: a host-resident umT5 runs on the GPU for the encode when memory allows
+        (between rollouts the KV cache is free). ``FASTFRAMES_TEXT_ON_GPU=0`` disables it."""
+        if os.environ.get("FASTFRAMES_TEXT_ON_GPU", "1") != "1" or self.device.type != "cuda":
+            return False
+        need = sum(p.numel() * p.element_size() for p in self.text_encoder.parameters())
+        free, _ = torch.cuda.mem_get_info()
+        reserved_free = torch.cuda.memory_reserved() - torch.cuda.memory_allocated()
+        return free + reserved_free > need + 2 * 2**30
+
+    def _encode_on_device(self, prompt):
+        params = list(self.text_encoder.parameters())
+        if not getattr(self, "_text_pinned", False):
+            for p in params:
+                p.data = p.data.pin_memory()
+            self._text_pinned = True
+        host = [p.data for p in params]
+        try:
+            for p, h in zip(params, host):
+                p.data = h.to(self.device, non_blocking=True)
+            with self.autocast():
+                return self.text_encoder([prompt])["prompt_embeds"]
+        finally:
+            for p, h in zip(params, host):
+                p.data = h
 
     def _noise(self, seed):
         cfg = self.config
@@ -186,7 +234,10 @@ class FastFrames:
 
     def _predict(self, noisy, timestep, frame, text_cache, kv_cache):
         t, e0, e_head = self._time_conditioning(timestep)
-        flow, features = self.dit.forward_frame(noisy, e0, e_head, text_cache, kv_cache, frame, fast=self.fast)
+        if self.engine is not None:
+            flow, features = self.engine.forward_frame(noisy, e0, e_head, kv_cache, frame)
+        else:
+            flow, features = self.dit.forward_frame(noisy, e0, e_head, text_cache, kv_cache, frame, fast=self.fast)
         x0 = self.scheduler.flow_to_x0(flow.flatten(0, 1), noisy.flatten(0, 1), t.flatten())
         return x0.unflatten(0, flow.shape[:2]), features, e_head
 
@@ -196,8 +247,11 @@ class FastFrames:
                 self.config.refine_timestep, 1, self.device, torch.bfloat16)
         emb = self._refine_embedding
         start, end = frame * self.frame_tokens, (frame + 1) * self.frame_tokens
-        stem = self.dit.patch_embedding(x0.permute(0, 2, 1, 3, 4).contiguous())
-        stem = stem.flatten(2).transpose(1, 2)
+        if self.engine is not None:
+            stem = self.engine.stem(x0)
+        else:
+            stem = self.dit.patch_embedding(x0.permute(0, 2, 1, 3, 4).contiguous())
+            stem = stem.flatten(2).transpose(1, 2)
         if self.config.contiguous_stem:
             stem = stem.contiguous()
         phi = self.refiner.compute_phi(stem.to(torch.bfloat16), emb)
@@ -224,7 +278,11 @@ class FastFrames:
         cfg = self.config
         with self.autocast():
             noise, transition = self._noise(seed)
-            text_cache = self.dit.text_cache(prompt_embeds)
+            if self.engine is not None:
+                text_cache = self.engine.text_cache(prompt_embeds)
+                self.engine.set_text(text_cache)
+            else:
+                text_cache = self.dit.text_cache(prompt_embeds)
             kv_cache = allocate_kv_cache(self.dit, cfg.num_frames, self.frame_tokens, device=self.device)
             latents, features, modulation = torch.empty_like(noise), [], []
             for frame in range(cfg.num_frames):

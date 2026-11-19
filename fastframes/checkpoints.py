@@ -18,18 +18,20 @@ __all__ = ["load_state_dict", "build_wan", "load_wan_base"]
 _PREFIXES = ("model._fsdp_wrapped_module.", "_fsdp_wrapped_module.", "model.")
 
 
-def load_state_dict(path, key=None):
+def load_state_dict(path, key=None, device="cpu"):
     """Tensor state from ``.safetensors`` (a file, or the ``.safetensors.index.json`` of a sharded
-    file) or a torch pickle (optionally nested under ``key``)."""
+    file) or a torch pickle (optionally nested under ``key``). ``device`` applies to safetensors
+    (ROCm port: loading a 28 GB 14B DiT straight to the GPU avoids staging it in host RAM)."""
     path = Path(path)
+    device = str(device)
     if path.name.endswith(".safetensors.index.json"):
         from safetensors.torch import load_file
         state = {}
         for name in sorted(set(json.loads(path.read_text())["weight_map"].values())):
-            state.update(load_file(str(path.parent / name)))
+            state.update(load_file(str(path.parent / name), device=device))
     elif path.suffix == ".safetensors":
         from safetensors.torch import load_file
-        state = load_file(str(path))
+        state = load_file(str(path), device=device)
     else:
         state = torch.load(path, map_location="cpu", mmap=True, weights_only=True)
         if key is not None:

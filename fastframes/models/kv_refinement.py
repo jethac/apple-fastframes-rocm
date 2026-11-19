@@ -26,7 +26,8 @@ from typing import List, Tuple
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.attention import SDPBackend, sdpa_kernel
+
+from ..accel import sdpa
 
 __all__ = ["KVRefinementNetwork"]
 
@@ -41,10 +42,7 @@ def sinusoidal_embedding_1d(dim: int, position: torch.Tensor) -> torch.Tensor:
 
 def _sdpa(q, k, v):
     """``[B, H, L, D]`` attention; cuDNN for half precision on CUDA, math kernel otherwise."""
-    if q.is_cuda and q.dtype in (torch.float16, torch.bfloat16):
-        with sdpa_kernel(SDPBackend.CUDNN_ATTENTION):
-            return F.scaled_dot_product_attention(q, k, v)
-    return F.scaled_dot_product_attention(q, k, v)
+    return sdpa(q, k, v)  # ROCm port: platform-selected kernel (cuDNN on NVIDIA)
 
 
 class TimestepEmbedder(nn.Module):

@@ -1,0 +1,8 @@
+# Installed on top of the rocm/pytorch base image (torch / torchvision / triton come from it).
+transformers>=5.10
+safetensors>=0.4
+einops
+ftfy
+regex
+pyyaml
+huggingface_hub[hf_xet]

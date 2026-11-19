@@ -10,3 +10,7 @@ __pycache__/
 /results/
 /runs/
 /upstream/
+
+# ROCm port
+outputs/
+checkpoints/

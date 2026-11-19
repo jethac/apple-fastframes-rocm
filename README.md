@@ -1,3 +1,22 @@
+# FastFrames on ROCm (AMD Strix Halo)
+
+> **This is an unofficial community port, not an Apple repository.** It is a fork of
+> [apple-aiml-research/ml-fastframes](https://github.com/apple-aiml-research/ml-fastframes) that
+> runs FastFrames-S (1.3B) and FastFrames-L (14B) on AMD GPUs through ROCm. It is tuned for the
+> Ryzen AI MAX+ 395 / Radeon 8060S (gfx1151).
+>
+> - **FastFrames-S:** 17.2 s per 81-frame 480p clip.
+> - **FastFrames-L:** 97.2 s per clip, fitting in a 64 GB carve-out.
+> - **Main changes:** a Triton flash-attention kernel about 2x faster than AOTriton on gfx1151, a
+>   compiled per-frame engine, and host-memory block streaming.
+> - **NPU:** an XDNA2 experiment for FastFrames-S.
+>
+> Setup, measurements and numerical-agreement checks are in **[rocm/README.md](rocm/README.md)**.
+> Everything below is the upstream README. Code and weights keep their original licenses (Apple
+> Sample Code License, apple-amlr model license, CC BY-NC-SA 4.0 for LingBot).
+
+---
+
 # FastFrames: Video Generation at Interactive Latency
 
 [![Project Page](https://img.shields.io/badge/Project-Page-green)](https://apple-aiml-research.github.io/ml-fastframes/)

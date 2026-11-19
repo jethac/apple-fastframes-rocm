@@ -1,0 +1,39 @@
+{
+ "arch": "gfx1151",
+ "torch": "2.11.0+rocm7.13.0",
+ "hip": "7.13.99004",
+ "rows": [
+  {
+   "model": "14b",
+   "kv_len": 1560,
+   "backend": "sdpa",
+   "max_err": 0.0010240375995635986,
+   "ms": 3.143,
+   "tflops": 15.86
+  },
+  {
+   "model": "14b",
+   "kv_len": 1560,
+   "backend": "triton",
+   "max_err": 0.0010240375995635986,
+   "ms": 2.038,
+   "tflops": 24.45
+  },
+  {
+   "model": "14b",
+   "kv_len": 32760,
+   "backend": "sdpa",
+   "max_err": 0.00016907602548599243,
+   "ms": 75.898,
+   "tflops": 13.79
+  },
+  {
+   "model": "14b",
+   "kv_len": 32760,
+   "backend": "triton",
+   "max_err": 0.00016907602548599243,
+   "ms": 42.343,
+   "tflops": 24.72
+  }
+ ]
+}

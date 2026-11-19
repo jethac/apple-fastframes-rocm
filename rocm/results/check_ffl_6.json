@@ -1,0 +1,29 @@
+{
+ "model": "ff-l",
+ "per_frame_latent_cos": [
+  0.9888,
+  0.9844,
+  0.9785,
+  0.9654,
+  0.959,
+  0.9574
+ ],
+ "frames": 6,
+ "attention": "triton",
+ "compile": "max-autotune-no-cudagraphs",
+ "latents": {
+  "max_abs": 3.03125,
+  "rel_l2": 0.2478361278772354,
+  "cos": 0.9692223072052002
+ },
+ "features": {
+  "max_abs": 7.765625,
+  "rel_l2": 0.17403541505336761,
+  "cos": 0.9848379492759705
+ },
+ "pixel_psnr_db": 20.95921039581299,
+ "reference_rollout_s": 49.984763144981116,
+ "engine_rollout_s": 22.957385643967427,
+ "offloaded_blocks": 0,
+ "peak_gib": 41.08
+}

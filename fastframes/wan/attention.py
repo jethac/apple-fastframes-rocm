@@ -3,9 +3,12 @@
 # Licensed under the Apache License, Version 2.0; see ACKNOWLEDGEMENTS.
 # Modified for FastFrames: attention uses PyTorch SDPA with the cuDNN backend
 # (fastest on B200; PyTorch would otherwise auto-select FLASH).
+# ROCm port: the kernel comes from ``fastframes.accel`` (cuDNN on NVIDIA, the fastest measured
+# backend on AMD).
 import torch
 import torch.nn.functional as F
-from torch.nn.attention import SDPBackend, sdpa_kernel
+
+from ..accel import sdpa
 
 __all__ = ["attention", "cross_attention", "set_cross_attention_backend"]
 
@@ -25,8 +28,7 @@ def attention(q, k, v, causal=False, dropout_p=0.0, backend="cudnn"):
     if backend == "auto":
         out = F.scaled_dot_product_attention(q, k, v, is_causal=causal, dropout_p=dropout_p)
     else:
-        with sdpa_kernel(SDPBackend.CUDNN_ATTENTION):
-            out = F.scaled_dot_product_attention(q, k, v, is_causal=causal, dropout_p=dropout_p)
+        out = sdpa(q, k, v, is_causal=causal, dropout_p=dropout_p)
     return out.transpose(1, 2).contiguous().to(out_dtype)
 
 

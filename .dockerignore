@@ -1,0 +1,7 @@
+outputs
+checkpoints
+npu
+.git
+docs/assets
+upstream
+**/__pycache__

@@ -22,13 +22,23 @@ from fastframes.pipeline import MODELS, FastFrames, configure_backends  # noqa: 
 from fastframes.video import save_video  # noqa: E402
 
 
-def load_model(name, checkpoint_dir):
-    """Build a released model from ``<checkpoint_dir>`` (see docs/installation.md#checkpoints)."""
+def load_model(name, checkpoint_dir, engine="max-autotune-no-cudagraphs", text_encoder_device=None):
+    """Build a released model from ``<checkpoint_dir>`` (see docs/installation.md#checkpoints).
+
+    ROCm port: ``engine`` selects the compiled per-frame engine (``fastframes.engine``; ``"none"``
+    keeps the upstream eager path) and ``text_encoder_device`` can place umT5-XXL on the CPU.
+    """
     spec = MODELS[name]
     root = Path(checkpoint_dir)
     configure_backends(spec.config)
-    return FastFrames.from_pretrained(
-        spec.config, root / spec.wan_dir, root / spec.dit, root / spec.refiner, root / spec.decoder)
+    if text_encoder_device is None and name == "ff-l":
+        text_encoder_device = "cpu"  # 11 GB umT5-XXL on the host keeps the 14B DiT + KV cache on the GPU
+    model = FastFrames.from_pretrained(
+        spec.config, root / spec.wan_dir, root / spec.dit, root / spec.refiner, root / spec.decoder,
+        text_encoder_device=text_encoder_device)
+    if engine != "none":
+        model.enable_engine(compile=None if engine == "eager" else engine)
+    return model
 
 
 def main():
@@ -43,6 +53,12 @@ def main():
     parser.add_argument("--output-dir", type=Path, help="output directory for --prompt-file")
     parser.add_argument("--shard", type=int, default=0)
     parser.add_argument("--num-shards", type=int, default=1)
+    parser.add_argument("--engine", default="max-autotune-no-cudagraphs",
+                        choices=("max-autotune-no-cudagraphs", "default", "eager", "none"),
+                        help="ROCm port: compiled per-frame engine mode; 'eager' = engine without "
+                             "torch.compile; 'none' = upstream reference path")
+    parser.add_argument("--text-encoder-device", default=None,
+                        help="device of umT5-XXL (default: cpu for ff-l, the GPU for ff-s)")
     args = parser.parse_args()
 
     if args.prompt is not None:
@@ -52,7 +68,8 @@ def main():
         out = args.output_dir or Path("outputs") / args.model
         jobs = [(p, args.seed + i, out / f"{i:04d}.mp4") for i, p in enumerate(prompts)][args.shard::args.num_shards]
 
-    model = load_model(args.model, args.checkpoint_dir)
+    model = load_model(args.model, args.checkpoint_dir, engine=args.engine,
+                       text_encoder_device=args.text_encoder_device)
     for prompt, seed, path in jobs:
         start = time.perf_counter()
         frames = model.generate(prompt, seed)
